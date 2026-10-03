@@ -1,0 +1,15 @@
+{
+  "arithmetic": "Python fractions.Fraction, exact; real orthogonal subset only",
+  "seed": 20260929,
+  "dimensions": [
+    1,
+    7
+  ],
+  "objective_cases": 210,
+  "odd_set_checks": 1270,
+  "stability_cases": 177,
+  "tied_matching_cases_excluded_from_gap_estimate": 3,
+  "max_unitary_entry_denominator_bits": 21,
+  "failures": 0,
+  "source_sha256": "d412fd187f926f4968e89d009ad2c91464ca7875561f0bb87c8f7711a30a1642"
+}

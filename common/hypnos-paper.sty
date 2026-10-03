@@ -1,0 +1,89 @@
+% hypnos-paper.sty: the one house format for the Hypnos Math manuscripts.
+% Set on 2026-09-29 at the owner's direction so that every paper in the set
+% (the methods paper of August 2026 and the three mathematics papers of
+% 2026-09-28/29) is typeset the same way and carries the same attribution
+% block. Load from a paper directory as \usepackage{../common/hypnos-paper}.
+%
+% What it fixes: article 11pt, Latin Modern, 1 inch margins, amsthm theorem
+% environments numbered within sections, hyperref with dark blue links, a
+% running head with the short title and "Hypnos Math", and the title block
+% that names the writer and the director in the same words on every paper:
+%
+%   \hypnostitle{Title}                 the full title (also the PDF title)
+%   \hypnosshorttitle{Short title}      for the running head
+%   \hypnoswriter{Claude Fable 5.1 (Anthropic)}   the model that wrote it
+%   \hypnosdirector{David Ross}         the human who directed it (default)
+%   \hypnosdate{September 29, 2026}
+%   \hypnosmaketitle                    typesets the block
+%
+% and, right after the abstract, every paper carries
+%   \begin{attribution} ... \end{attribution}
+% an unnumbered section "Attribution" whose text follows the
+% pattern in paper/common/README.md.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{hypnos-paper}[2026/09/29 Hypnos Math manuscript style]
+
+\RequirePackage[margin=1in]{geometry}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{amsmath,amssymb,amsthm,mathtools}
+\RequirePackage{booktabs,array,graphicx}
+\RequirePackage{float}
+\RequirePackage{microtype}
+\RequirePackage{xcolor}
+\RequirePackage{fancyhdr}
+\RequirePackage[colorlinks=true,allcolors=blue!60!black]{hyperref}
+\RequirePackage{url}
+\urlstyle{same}
+
+% ---- theorem environments (numbered within sections; every paper the same)
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{question}[theorem]{Question}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ---- title block
+\def\hyp@title{}\def\hyp@shorttitle{}\def\hyp@writer{}\def\hyp@date{}
+\def\hyp@director{David Ross}
+\newcommand{\hypnostitle}[1]{\def\hyp@title{#1}\title{#1}}
+\newcommand{\hypnosshorttitle}[1]{\def\hyp@shorttitle{#1}}
+\newcommand{\hypnoswriter}[1]{\def\hyp@writer{#1}}
+\newcommand{\hypnosdirector}[1]{\def\hyp@director{#1}}
+\newcommand{\hypnosdate}[1]{\def\hyp@date{#1}\date{#1}}
+\newcommand{\hypnosmaketitle}{%
+  \hypersetup{pdftitle={\hyp@title},pdfauthor={\hyp@writer, at the direction of \hyp@director}}%
+  \begin{center}
+    {\LARGE\bfseries \hyp@title\par}
+    \vskip 1.4em
+    {\large Written by \hyp@writer\par}
+    \vskip 0.35em
+    {\large at the direction of \hyp@director\par}
+    \vskip 0.5em
+    {\normalsize Hypnos Math, \url{https://hypnosmath.org}\par}
+    \vskip 0.35em
+    {\normalsize \hyp@date\par}
+  \end{center}
+  \vskip 1.2em
+  \thispagestyle{plain}}
+
+% ---- running head
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape \hyp@shorttitle}
+\fancyhead[R]{\small Hypnos Math}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+% ---- the attribution block, an unnumbered section right after the abstract
+\newenvironment{attribution}{\section*{Attribution}}{}
+
+% ---- a common abstract look (article's, with a little more room)
+\renewenvironment{abstract}{%
+  \begin{center}\bfseries\abstractname\end{center}\begin{quotation}\noindent\ignorespaces}{\end{quotation}}

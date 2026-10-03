@@ -1,0 +1,42 @@
+{
+  "seed": 20260929,
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.2.6",
+    "scipy": "1.16.3"
+  },
+  "A_free_youla": {
+    "instances": 30,
+    "random_samples_per_instance": 300,
+    "max_random_excess": -4.711275597385489e-05,
+    "method": "projected gradient ascent, 20 starts x 4000 steps, singular values clipped at 1, final snap to a partial isometry",
+    "max_optimized_excess": 5.551115123125783e-16,
+    "min_optimized_excess": -7.178675857100192e-05,
+    "worst_shortfall": 7.178675857100192e-05,
+    "instances_within_1e-6": 19,
+    "instances_within_1e-4": 30
+  },
+  "B_prescribed_youla": {
+    "instances": 30,
+    "max_random_excess": 8.004708007547379e-14,
+    "method": "Nelder-Mead over SO(n) via expm of a skew parameter, 20 starts",
+    "max_optimized_excess": 1.500466417780899e-13,
+    "min_optimized_excess": 1.0842021724855044e-18,
+    "worst_shortfall": 0.0,
+    "instances_within_1e-6": 30
+  },
+  "C_inequality_family": {
+    "units": "squared cohesion ||N||_F^2 = 2 x (LP value); halve for the LP's own units",
+    "max_abs_diff_full_family_LP_vs_theorem": 5.551115123125783e-17,
+    "max_abs_diff_prefix_family_LP_vs_theorem": 5.551115123125783e-17,
+    "max_excess_coarse_family_LP_over_theorem": 0.019409162878746528,
+    "max_excess_CB_plus_degree_LP_over_theorem": 0.0004419584168336016,
+    "instances_CB_plus_degree_LP_exceeds_theorem": 4,
+    "instances": 30
+  },
+  "D_odd_sets": {
+    "checks": 8760,
+    "max_excess": -0.032159502235817206
+  },
+  "source_sha256": "2f476e76a830e3da491820cb4cd37e12c9ab3831ea0393797289cf9257561b57"
+}

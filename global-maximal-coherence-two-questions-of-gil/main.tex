@@ -1,0 +1,615 @@
+\documentclass[11pt]{article}
+\usepackage{../common/hypnos-paper}
+\newcommand{\F}{\mathrm F}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cP}{\mathcal P}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Orth}{O}
+\hypnostitle{Maximal Coherence for Prescribed Intrinsic Populations and Youla Values: Two Questions of Gil}
+\hypnosshorttitle{Maximal coherence for prescribed populations and Youla values}
+\hypnoswriter{Claude Fable 5.1 (Anthropic)}
+\hypnosdate{September 29, 2026}
+
+\begin{document}
+\hypnosmaketitle
+\begin{abstract}
+In the intrinsic reference basis of a finite-dimensional density matrix,
+$\rho=A+iN$ with $A=\diag(a_1\ge\dots\ge a_n\ge0)$ the intrinsic populations
+and $N$ real antisymmetric; Gil (Entropy 28:877, 2026) calls $\|N\|_\F^2$ the
+squared cohesion. Gil showed that among states whose metaspin tensor is
+supported on a matching of intrinsic axes (the aligned class) the squared
+cohesion is maximized, for fixed populations, by pairing adjacent populations,
+and asked whether this remains true over all orientations of the Youla frame
+with free Youla values, and what the maximum over all orientations is when
+the Youla values are prescribed. We determine both maxima. With free Youla
+values the maximum over all states with these populations is
+$2\sum_ka_{2k-1}a_{2k}$, so Gil's adjacent-pairing value is the global
+maximum. With prescribed Youla values $1\ge s_1\ge\dots\ge s_m\ge0$,
+$m=\lfloor n/2\rfloor$, the maximum over all orientations is
+$2\sum_ks_k^2a_{2k-1}a_{2k}$, attained by placing the $k$-th largest Youla
+value on the $k$-th adjacent pair; when populations vanish, both statements
+are read on their support. The second value rests on the inequality
+$\sum_{i<j}a_ia_j|M_{ij}|^2\le\sum_ks_k^2a_{2k-1}a_{2k}$ for every
+skew-symmetric $M$ with singular values $s_1,s_1,\dots,s_m,s_m$, which
+follows from Horn's 1950 inequality for the singular values of a product and
+is the Frobenius case of Mathias's 1992 inequality for Hadamard products; we
+claim no priority for it. Two proofs are given. For free values, the squared
+entries of a real antisymmetric contraction lie in Edmonds' matching
+polytope, which extends the statement to arbitrary nonnegative pairwise
+weights; for prescribed values, we use a layer-cake decomposition with Ky
+Fan's maximum principle and interlacing of singular values, which yields a family
+of linear inequalities on the squared entries of skew matrices with
+prescribed spectrum. The product form of the weights is essential there:
+with prescribed Youla values and general nonnegative weights the maximum need
+not be aligned, as an explicit example with $n=4$ shows. Gil's question on
+the image of the population-weighted Gram map, and the feasibility problem
+with the spectrum of $\rho$ fixed, are not addressed.
+\end{abstract}
+
+\begin{attribution}
+This paper was written by Claude Fable 5.1, an AI model made by Anthropic, at the direction of David Ross. The model found the two questions of Gil while reviewing the companion manuscript on approximate antiunitary symmetry (whose hull lemma it reuses), proved the theorems, wrote the verification program and the text; David Ross set the task, ran the process, and takes responsibility for the manuscript. The answer to the free-value question (Theorem~\ref{thm:free}, eq.~\eqref{eq:free}) was also found and proved independently, through the same hull lemma, by the companion manuscript's adversarial self-review (GPT-6 Astra, 2026-09-28), before this note's first draft; neither review had read the other, and the companion's Section~1 records that both found the application. Four reviews were applied, each with a per-item ledger. On 2026-09-29, Claude Opus 5.5 (Anthropic), in a fresh context, found the proofs complete and three framing defects (an overclaimed abstract, refuted by the $n=4$ example it supplied, now Remark~\ref{rem:nonproduct}; an unread source behind a novelty claim; a misreported numerical search); GPT-6 Astra (OpenAI), through the Codex CLI, found no blocking defect and two major items (Theorem~\ref{thm:prescribed} follows from Horn's inequality, now its second proof; Corollary~\ref{cor:consequences}(1) needed its support restriction) and supplied the exact certificates of Remark~\ref{rem:nonproduct}. A consistency pass on 2026-10-01 by Claude Opus 5.5 checked the exposition and the quotations against their sources. On October 2, GPT-6 Astra, fresh to the note, found both theorems and the hull lemma correct and corrected the exact-orbit certificate of Remark~\ref{rem:nonproduct} (a factor of two and the sign of the Pfaffian; the stated maximum unchanged) and a quotation locator; Claude Opus 5.5, fresh to the note, found every numbered statement correct and two major items of attribution and source access (the earlier independent proof of Theorem~\ref{thm:free}; the disclosure about Mathias's abstract) and ten minor ones. All were applied. A literature pass the same day found Mathias's 1992 theorem, which contains inequality~\eqref{eq:prescribed} as its Frobenius case; Remark~\ref{rem:lit} cites it through its zbMATH review. The reviews and the per-item dispositions accompany the source. David Ross read every page, for the only things he can judge: that the account of the harness and of the process matches the record, and that nothing reads like a machine grading its own homework. He did not check the proofs, and could not have; a reader should take his reading as a check for red flags, not as a review. No human mathematician has reviewed this paper. It is one of three manuscripts that came from the record of Hypnos, the research harness described in Section~\ref{sec:provenance}, on the night of 2026-09-28/29, this one at one remove (the harness contributed no step of its mathematics); it is the last of the three, after Astra's antiunitary paper and the Riesz-basis paper on the unfolded zeta zeros, and it was written without reading the latter.
+\end{attribution}
+
+\section{The question}
+
+Gil~\cite{gil} organizes a finite-dimensional density matrix $\rho$ by
+diagonalizing its real part with a real orthogonal congruence. In the
+resulting intrinsic reference basis (IRB),
+\begin{equation}\label{eq:irb}
+\rho=A+iN,\qquad A=\diag(a_1,\dots,a_n),\quad a_1\ge\dots\ge a_n\ge0,\quad \sum_ia_i=1,\quad N^T=-N,
+\end{equation}
+with $N$ real (Gil, eq.~(3)); a density matrix is Hermitian, positive
+semidefinite and trace-normalized (Gil, Section 2.1), and the IRB is obtained
+from a fixed real structure by a real orthogonal change of basis, so the
+$a_i$, the intrinsic populations, are the eigenvalues of the real part of
+$\rho$ and not in general those of $\rho$. For strictly positive populations
+the metaspin tensor is
+\begin{equation}\label{eq:metaspin}
+M_{ij}=\frac{N_{ij}}{\sqrt{a_ia_j}}\qquad(i\ne j)
+\end{equation}
+(Gil, eq.~(7)), a real antisymmetric matrix; when some populations vanish,
+$M$ is defined on the support $\{i:a_i>0\}$ and extended by zeros to the
+inactive axes (Gil, Section 2.3), so its entries on inactive axes are not
+free variables. Then
+\begin{equation}\label{eq:factor}
+\rho=A^{1/2}(I+iM)A^{1/2}
+\end{equation}
+(Gil, eq.~(8)). Since $iM$ is Hermitian with eigenvalues $\pm s_k$ (and $0$
+when $n$ is odd), where
+$s_1\ge s_2\ge\dots\ge s_m\ge0$ ($m=\lfloor n/2\rfloor$) are the Youla values
+of $M$, positivity of $\rho$ is equivalent to $s_1\le1$, that is, to
+\begin{equation}\label{eq:contraction}
+\|M\|_\op\le1 .
+\end{equation}
+Gil calls $\|N\|_\F$ the cohesion of the antisymmetric block; its square is
+\begin{equation}\label{eq:cohesion}
+\|N\|_\F^2=2\sum_{i<j}a_ia_jM_{ij}^2
+\end{equation}
+(Gil, eqs.~(20) and (33)), and it enters his complementarity identities for
+purity, spectral sharpening and R\'enyi entropies. By the real normal form of
+a real skew-symmetric matrix under orthogonal congruence (Youla~\cite{youla}
+for the complex case under unitary congruence; \cite[Section~2.5]{hjma} for the
+real case) there is $Q_M\in\Orth(n)$ with
+$Q_M^TMQ_M=\bigoplus_k\left(\begin{smallmatrix}0&s_k\\-s_k&0\end{smallmatrix}\right)\oplus0$;
+Gil calls $\rho$ aligned (his Definition 1) when, in some admissible IRB
+representative, $Q_M$ can be taken to be a signed permutation of the IRB axes,
+so that $M$ is supported on a matching of index pairs.
+
+\begin{theorem}[Gil~\cite{gil}, Theorem 2]\label{thm:gil}
+For fixed ordered populations, the maximum of $\|N\|_\F^2$ over the aligned
+class is $2\sum_{k=1}^{m}a_{2k-1}a_{2k}$, attained by the adjacent pairing
+$(1,2),(3,4),\dots$ with $s_k=1$ on every pair of positive population product.
+\end{theorem}
+
+Gil then writes, in the paragraph after his Theorem 2 (p.~10 of the publisher's PDF, where the section is numbered 3.5; the PubMed Central HTML rendering numbers it 3.4): ``Whether the same maximum is globally optimal
+over arbitrary Youla orientations is a separate optimization problem and is
+not assumed here,'' and lists in Section 8.2 three problems ``deliberately
+left open because they require optimization over Grassmannian orbits rather
+than the elementary matching argument used here''; they are unnumbered there,
+and we number them (i) to (iii): (i) to determine the global maximum of
+$\|N\|_\F^2$ for fixed populations and fixed Youla values over all
+orientations $Q_M$; (ii) to characterize the image of the population-weighted
+Gram map of Pl\"ucker coordinates; (iii) to decide whether the adjacent-pairing
+maximum of Theorem~\ref{thm:gil} remains globally optimal beyond the aligned
+class under suitable spectral constraints.
+
+We determine the maximum asked for in (i) (Theorem~\ref{thm:prescribed}) and
+answer (iii) affirmatively (Theorem~\ref{thm:free}); (ii) is not addressed. In
+(iii) we read ``suitable spectral constraints'' as constraints on the Youla
+values: if the spectrum of $\rho$ were fixed together with the populations,
+$\tr\rho^2=\sum_ia_i^2+\|N\|_\F^2$ would already fix the objective, and the
+remaining question, whether an aligned representative is compatible with such
+a restriction on the spectrum of $\rho$, would be a feasibility question that
+we do not address. For free Youla values the Grassmannian orbit never has to be parametrized:
+the squared entries of every orientation lie in Edmonds' matching polytope,
+so the maximization becomes linear optimization over a polytope whose
+vertices are matchings. For prescribed values the product-weight maximum
+follows instead from the singular-value inequality of
+Theorem~\ref{thm:prescribed}.
+
+\section{Squared entries of an antisymmetric contraction}
+
+Let $\cM_n$ be the set of matchings of $\{1,\dots,n\}$ (sets of disjoint
+pairs, the empty matching included), $\mathbf1_\mu\in\mathbb R^{\binom n2}$ the
+incidence vector of a matching $\mu$ (the letter $M$ is reserved for the
+metaspin tensor), $E(B)$ the pairs inside a vertex set $B$, and $\delta(i)$
+the pairs containing $i$. Edmonds~\cite{edmonds} proved that the convex hull
+of the incidence vectors is
+\begin{equation}\label{eq:edmonds}
+\cP_n=\Big\{x\ge0:\ \sum_{e\in\delta(i)}x_e\le1\ (1\le i\le n),\quad
+\sum_{e\in E(B)}x_e\le\tfrac{|B|-1}2\ (|B|\ \text{odd})\Big\}.
+\end{equation}
+
+\begin{lemma}[squared-entry hull, from \cite{ross}]\label{lem:hull}
+Let $K$ be an $n\times n$ real or complex skew-symmetric matrix with
+$\|K\|_\op\le1$ and put $x_{\{i,j\}}=|K_{ij}|^2$ for $i<j$. Then $x\in\cP_n$.
+Conversely every $\mathbf1_\mu$ is of this form, so the convex hull of the set of
+such vectors is exactly $\cP_n$.
+\end{lemma}
+
+\begin{proof}
+Nonnegativity is clear. The $i$-th row of a contraction has squared norm at
+most $1$, which gives the degree inequalities. For $|B|$ odd, the principal
+submatrix $K_B$ is skew-symmetric of odd order, so
+$\det K_B=\det K_B^T=\det(-K_B)=-\det K_B$, hence $\det K_B=0$ and
+$\rank K_B\le|B|-1$. $K_B$ is a contraction, so each of its singular values is
+at most $1$ and $2\sum_{e\in E(B)}x_e=\|K_B\|_\F^2\le\rank K_B\le|B|-1$. Thus
+$x$ satisfies \eqref{eq:edmonds}. Conversely, the matrix with block
+$\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)$ on each pair of
+$\mu$ and zeros elsewhere is a skew-symmetric partial isometry, hence a
+contraction, with squared entries $\mathbf1_\mu$. Since $\cP_n$ is convex and
+contains all the vectors, and its vertices are among them, the hull identity
+follows.
+\end{proof}
+
+This lemma is taken from the companion manuscript~\cite{ross}, where it
+drives an exact reduction of approximate antiunitary symmetry to weighted
+matching; its application to density matrices was found independently by
+both reviews of that manuscript (its Section~1 says so) and is developed
+here. The set of squared-entry
+vectors itself is not convex (a strict mixture of two matchings need not be
+realized), and no point violating an odd-set inequality is realized by any
+contraction; the hull statement is what matters below.
+
+\section{Free Youla values}
+
+\begin{theorem}\label{thm:free}
+Let $a_1\ge\dots\ge a_n\ge0$ with $\sum_ia_i=1$ be fixed. Over all density matrices whose
+intrinsic representation \eqref{eq:irb} has these populations, with every
+orientation of the Youla frame and every admissible Youla spectrum,
+\begin{equation}\label{eq:free}
+\max\|N\|_\F^2=2\sum_{k=1}^{m}a_{2k-1}a_{2k},
+\end{equation}
+attained inside the aligned class by the adjacent pairing with $s_k=1$ on
+every adjacent pair of positive population product. More generally, if all populations are positive, then for any
+nonnegative weights $b_{ij}$,
+\begin{equation}\label{eq:weights}
+\max\sum_{i<j}b_{ij}M_{ij}^2=\max_{\mu\in\cM_n}\sum_{\{i,j\}\in\mu}b_{ij},
+\end{equation}
+the maximum weight of a matching, and the set of admissible vectors
+$(M_{ij}^2)_{i<j}$ has convex hull $\cP_n$; if some populations vanish, both
+statements hold with the matchings and the polytope of the support of $A$.
+\end{theorem}
+
+\begin{proof}
+Suppose first that all populations are positive. By \eqref{eq:factor} and
+\eqref{eq:contraction}, the admissible coherence blocks are exactly
+$N=A^{1/2}MA^{1/2}$ with $M$ a real antisymmetric contraction, and by
+\eqref{eq:cohesion} the squared cohesion is $2\sum_{i<j}a_ia_jx_{ij}$ with
+$x=(M_{ij}^2)$. By Lemma~\ref{lem:hull}, $x\in\cP_n$. A linear functional with
+nonnegative coefficients attains its maximum over the polytope at a vertex
+$\mathbf1_\mu$, with value $2\sum_{\{i,j\}\in\mu}a_ia_j$. Among matchings the
+adjacent pairing is optimal. First complete $\mu$ to a matching of maximal
+size, which does not decrease the weight since the weights are nonnegative.
+If $n$ is odd and the unpaired vertex is $v<n$, give $v$ the partner of $n$
+and leave $n$ unpaired; the weight does not decrease since $a_v\ge a_n$. Now,
+for $a_i\ge a_j\ge a_k\ge a_l$,
+\begin{align*}
+a_ia_j+a_ka_l-(a_ia_k+a_ja_l)&=(a_i-a_l)(a_j-a_k)\ge0,\\
+a_ia_j+a_ka_l-(a_ia_l+a_ja_k)&=(a_i-a_k)(a_j-a_l)\ge0,
+\end{align*}
+so any crossing or nested pair of pairs can be uncrossed without decreasing
+the weight; these are the exchange inequalities (26), (27) of~\cite{gil}. Each
+uncrossing of pairs $\{i,k\},\{j,l\}$ or $\{i,l\},\{j,k\}$ with $i<j<k<l$ into
+$\{i,j\},\{k,l\}$ lowers $\sum_{\{i,j\}\in\mu}|i-j|$ by $2(k-j)>0$, so the
+process stops, and the only perfect matching of $\{1,\dots,2m\}$ without a
+crossing or nested pair is the adjacent pairing. The adjacent signed swap with
+$s_k=1$ is an antisymmetric contraction, so the value is attained, and the
+corresponding state is aligned; explicitly, it is block diagonal with the
+blocks
+\[
+\begin{pmatrix}a_{2k-1}&i\sqrt{a_{2k-1}a_{2k}}\\-i\sqrt{a_{2k-1}a_{2k}}&a_{2k}\end{pmatrix},
+\]
+of eigenvalues $a_{2k-1}+a_{2k}$ and $0$, followed by the unpaired population
+when $n$ is odd: Hermitian, positive semidefinite, of trace one, with real
+part $A$ and $\|N\|_\F^2=2\sum_ka_{2k-1}a_{2k}$. The same argument gives \eqref{eq:weights}
+for arbitrary nonnegative weights, and the hull statement is the second half
+of Lemma~\ref{lem:hull}. If some populations vanish, positivity forces the
+corresponding rows and columns of $N$ to vanish (\cite{gil}, Section 2.3), so
+$M$ is defined on the support of $A$ and the argument applies there; the zero
+populations contribute nothing to \eqref{eq:free}, in agreement with the
+formula, while \eqref{eq:weights} and the hull statement must be read on the
+support: for $a=(\tfrac12,\tfrac12,0,0)$, $b_{12}=1$, $b_{34}=10$, the
+maximum over states is $1$ and the unrestricted matching weight is $11$.
+\end{proof}
+
+Theorem~\ref{thm:free} answers question (iii): under the only constraint Gil
+imposes, positivity, the adjacent-pairing maximum of Theorem~\ref{thm:gil} is
+the global maximum, and the aligned class contains a maximizer of every
+nonnegative pairwise coherence functional. The value \eqref{eq:free} also
+follows from Mathias's inequality with $\|M\|_\op\le1$ (Remark~\ref{rem:lit});
+what the matching polytope adds is the general-weight statement
+\eqref{eq:weights} and the hull.
+
+\section{Prescribed Youla values}
+
+The inequality below follows from Horn's product inequality~\cite{horn50}
+and is the Frobenius case of a theorem of Mathias~\cite{mathias}, known to
+us through its zbMATH review; Remark~\ref{rem:lit} gives both deductions.
+
+\begin{theorem}\label{thm:prescribed}
+Let $a_1\ge\dots\ge a_n\ge0$, $m=\lfloor n/2\rfloor$, and $s_1\ge\dots\ge s_m\ge0$.
+Let $M$ be any real or complex skew-symmetric $n\times n$ matrix whose singular
+values are $s_1,s_1,\dots,s_m,s_m$ (and $0$ if $n$ is odd); equivalently
+$M=Q\Sigma_sQ^T$ with $Q$ orthogonal or unitary and $\Sigma_s$ the Youla block
+form. Then
+\begin{equation}\label{eq:prescribed}
+\sum_{i<j}a_ia_j|M_{ij}|^2\ \le\ \sum_{k=1}^{m}s_k^2\,a_{2k-1}a_{2k},
+\end{equation}
+with equality for $Q=I$. Consequently, for fixed populations and fixed Youla
+values with $s_1\le1$, the global maximum of $\|N\|_\F^2$ over all
+orientations $Q_M$ is $2\sum_ks_k^2a_{2k-1}a_{2k}$, attained in the aligned
+class by placing the $k$-th largest Youla value on the $k$-th adjacent
+population pair. (For positive populations every orientation with $s_1\le1$
+is realized by a state. If $r<n$ populations are positive, a state exists only
+when at most $\lfloor r/2\rfloor$ of the $s_k$ are positive, and the
+statement is read on the support of $A$.)
+\end{theorem}
+
+\begin{proof}
+Write $x_{ij}=|M_{ij}|^2$. For nonnegative reals,
+$a_ia_j=\int_0^\infty\!\!\int_0^\infty\mathbf1[a_i>u]\,\mathbf1[a_j>v]\,du\,dv$,
+and averaging this with the same identity in the opposite order,
+\begin{equation}\label{eq:layer}
+\sum_{i<j}a_ia_jx_{ij}=\iint\Psi(u,v)\,du\,dv,\qquad
+\Psi(u,v)=\tfrac12\sum_{i<j}x_{ij}\Big(\mathbf1[a_i>u,\,a_j>v]+\mathbf1[a_i>v,\,a_j>u]\Big).
+\end{equation}
+Likewise the right side of \eqref{eq:prescribed} equals $\iint h(u,v)\,du\,dv$
+with $h(u,v)=\frac12\sum_ks_k^2(\mathbf1[a_{2k-1}>u,a_{2k}>v]+\mathbf1[a_{2k-1}>v,a_{2k}>u])$.
+Both integrands are symmetric in $(u,v)$, so it suffices to prove
+$\Psi(u,v)\le h(u,v)$ when $u\ge v$. Fix such $(u,v)$ and let
+$C=\{i:a_i>u\}$ and $B=\{i:a_i>v\}$. Because $a$ is sorted these are prefix
+sets, $C=\{1,\dots,p\}\subseteq B=\{1,\dots,q\}$.
+
+\emph{The integrand $\Psi$.} For $i<j$ we have $a_i\ge a_j$, hence
+$\mathbf1[a_i>u,a_j>v]=\mathbf1[i\in C,\,j\in B]$ and
+$\mathbf1[a_i>v,a_j>u]=\mathbf1[j\in C]$ (if $j\in C$ then $i\in C\subseteq B$).
+The pairs of $B$ whose smaller index lies in $C$ are the pairs inside $C$
+together with the pairs between $C$ and $B\setminus C$, so
+\[
+2\Psi(u,v)=2\,x(E(C))+x(C,B\setminus C),
+\]
+where $x(C,B\setminus C)$ denotes the mass on pairs with one end in $C$ and
+the other in $B\setminus C$. In matrix terms $2x(E(C))=\|M_C\|_\F^2$ and
+$x(C,B\setminus C)=\|M_{C,B\setminus C}\|_\F^2$, whence
+\begin{equation}\label{eq:psi}
+\Psi(u,v)=\tfrac12\|M_{C,B}\|_\F^2,
+\end{equation}
+one-half the squared Frobenius norm of the $p\times q$ block of $M$ with rows
+$C$ and columns $B$.
+
+\emph{The integrand $h$.} $\mathbf1[a_{2k-1}>u,a_{2k}>v]=\mathbf1[2k-1\le p,\,2k\le q]$
+and $\mathbf1[a_{2k-1}>v,a_{2k}>u]=\mathbf1[2k\le p]$. Counting,
+\begin{equation}\label{eq:h}
+h(u,v)=\tfrac12R(p,q),\qquad
+R(p,q)=\sum_{k\le\min(\lceil p/2\rceil,\lfloor q/2\rfloor)}s_k^2+\sum_{k\le\lfloor p/2\rfloor}s_k^2 .
+\end{equation}
+
+\emph{The inequality $\|M_{C,B}\|_\F^2\le R(p,q)$.} The block $M_{C,B}$
+consists of $p$ rows of the principal submatrix $M_B$, which is
+skew-symmetric of order $q$; its singular values come in pairs
+$\tau_1\ge \tau_1\ge \tau_2\ge \tau_2\ge\dots\ge \tau_r\ge \tau_r$, $r=\lfloor q/2\rfloor$, with an
+additional $0$ if $q$ is odd. Two classical facts apply. First, for any
+matrix $X$ and the coordinate projection $P$ onto $p$ of its rows,
+$\|PX\|_\F^2=\tr(PXX^*P)\le\sum_{k\le p}\sigma_k(X)^2$ (Ky Fan's maximum
+principle~\cite{fan,bhatia}). Second, the singular values of a submatrix are
+dominated termwise by those of the matrix, $\sigma_k(M_B)\le\sigma_k(M)$
+(\cite[Thm.~3.1.2, Cor.~3.1.3]{hornjohnson}), which, both sequences being
+sorted decreasingly, gives $\tau_k\le s_k$.
+Hence $\|M_{C,B}\|_\F^2\le\sum_{k\le p}\sigma_k(M_B)^2$, and we compare this
+sum with $R(p,q)$ in the three possible cases.
+\begin{itemize}
+\item $p$ even: $p/2\le\lfloor q/2\rfloor$, so
+$\sum_{k\le p}\sigma_k(M_B)^2=2\sum_{k\le p/2}\tau_k^2\le2\sum_{k\le p/2}s_k^2=R(p,q)$.
+\item $p$ odd and $p<q$: then $(p+1)/2\le\lfloor q/2\rfloor$, so
+$\sum_{k\le p}\sigma_k(M_B)^2=2\sum_{k\le(p-1)/2}\tau_k^2+\tau_{(p+1)/2}^2
+\le2\sum_{k\le(p-1)/2}s_k^2+s_{(p+1)/2}^2=R(p,q)$.
+\item $p=q$ odd: $\sum_{k\le p}\sigma_k(M_B)^2=2\sum_{k\le r}\tau_k^2\le2\sum_{k\le(q-1)/2}s_k^2=R(p,q)$.
+\end{itemize}
+Thus $\Psi\le h$ pointwise, and integrating \eqref{eq:layer} proves
+\eqref{eq:prescribed}. For $Q=I$ the only nonzero entries are
+$M_{2k-1,2k}=-M_{2k,2k-1}=s_k$, and the left side equals the right side.
+The consequence for the squared cohesion follows from \eqref{eq:cohesion} and
+the fact that the aligned configuration is admissible; for the density-matrix
+equality case replace the off-diagonal entries of the blocks in the proof of
+Theorem~\ref{thm:free} by $\pm is_k\sqrt{a_{2k-1}a_{2k}}$, whose determinant
+$a_{2k-1}a_{2k}(1-s_k^2)$ is nonnegative.
+\end{proof}
+
+\begin{proof}[Second proof, from a classical singular-value inequality]
+Put $D=\diag(\sqrt{a_1},\dots,\sqrt{a_n})$ and $T=DMD$. Then $T$ is
+skew-symmetric, so its singular values are $t_1,t_1,\dots,t_m,t_m$ (and $0$
+when $n$ is odd), and
+$\sum_{i<j}a_ia_j|M_{ij}|^2=\tfrac12\|T\|_\F^2=\sum_kt_k^2$. Horn's
+inequality for the singular values of a product~\cite{horn50} states that
+$\prod_{j\le r}\sigma_j(XY)\le\prod_{j\le r}\sigma_j(X)\sigma_j(Y)$ for every
+$r$. Applied twice at the even index $r=2\ell$, with $\sigma_j(D)=\sqrt{a_j}$
+in decreasing order,
+\[
+\prod_{k\le\ell}t_k^2=\prod_{j\le2\ell}\sigma_j(DMD)
+\le\Big(\prod_{j\le2\ell}\sigma_j(D)^2\Big)\prod_{j\le2\ell}\sigma_j(M)
+=\prod_{k\le\ell}s_k^2a_{2k-1}a_{2k}\qquad(1\le\ell\le m).
+\]
+Both $(t_k^2)_k$ and $(s_k^2a_{2k-1}a_{2k})_k$ are nonincreasing, so this says
+that the first is weakly log-majorized by the second, which implies weak
+majorization (apply the increasing convex function $\exp$ to the logarithms;
+zeros are handled by continuity), and in particular
+$\sum_kt_k^2\le\sum_ks_k^2a_{2k-1}a_{2k}$, which is \eqref{eq:prescribed}.
+Equality for $Q=I$ is as before.
+\end{proof}
+
+Theorem~\ref{thm:prescribed} answers question (i), and the second proof shows
+that, as a matrix inequality, it is a sharp consequence of classical
+majorization, and indeed a special case of Mathias's 1992 inequality
+(Remark~\ref{rem:lit}); what the layer-cake proof adds is the family of
+Proposition~\ref{prop:family}. The theorem recovers \eqref{eq:free}: apply it
+to each contraction with its own Youla values and use that the right side of
+\eqref{eq:prescribed} is nondecreasing in every $s_k$. It does not recover
+\eqref{eq:weights} or the hull statement, which concern non-product weights;
+Remark~\ref{rem:nonproduct} shows that the prescribed-value analog of
+\eqref{eq:weights} is false, so they cannot be obtained one Youla spectrum at
+a time.
+
+\begin{proposition}[valid inequalities for prescribed spectrum]\label{prop:family}
+Let $M$ be skew-symmetric with singular values $s_1,s_1,\dots,s_m,s_m$ (and
+$0$ if $n$ is odd), and $x_{ij}=|M_{ij}|^2$. For all vertex sets $C\subseteq B$,
+\begin{equation}\label{eq:family}
+2\sum_{e\in E(C)}x_e+\sum_{e\in E(B)\setminus E(C)\setminus E(B\setminus C)}x_e\ \le\ R(|C|,|B|),
+\end{equation}
+with $R$ as in \eqref{eq:h}. For $|C|=1$ and $|B|\ge2$ this is the degree constraint
+$\sum_{e\in\delta(i)\cap E(B)}x_e\le s_1^2$ (the singleton $C=B$ reads $0\le0$); for $C=B$ it is the refined
+odd/even-set constraint $\sum_{e\in E(B)}x_e\le\sum_{k\le\lfloor|B|/2\rfloor}s_k^2$,
+which for $s\equiv1$ is Edmonds' odd-set inequality.
+\end{proposition}
+
+\begin{proof}
+The proof of Theorem~\ref{thm:prescribed} never used that $C$ and $B$ are
+prefix sets: the left side of \eqref{eq:family} is $\|M_{C,B}\|_\F^2$ and the
+bound is the one just established.
+\end{proof}
+
+\begin{remark}\label{rem:lp}
+The subfamily $C=B$ of \eqref{eq:family} is not sufficient for
+Theorem~\ref{thm:prescribed}: the linear program that maximizes
+$\sum_{i<j}a_ia_jx_{ij}$ subject only to those constraints exceeds the true
+value of that sum in random instances (by up to $0.0097$ in the checks of
+Section~\ref{sec:checks}, that is, $0.019$ in units of $\|N\|_\F^2$), and
+adding the degree constraints to $C=B$ does not close the gap (in $4$ of the
+$30$ instances the value is still exceeded, by up to $2.2\cdot10^{-4}$, or
+$4.4\cdot10^{-4}$ in units of $\|N\|_\F^2$). Conversely, the proof uses only the
+$n(n+1)/2$ prefix inequalities $C=\{1,\dots,p\}\subseteq B=\{1,\dots,q\}$, and
+the linear program over those alone reproduces the value of
+Theorem~\ref{thm:prescribed} to machine precision in every instance, as does
+the linear program over the full family \eqref{eq:family}. Some mixed
+constraints with $C\subsetneq B$ are therefore essential, and the prefix ones
+suffice.
+\end{remark}
+
+\begin{remark}\label{rem:lit}
+The zero diagonal of a skew matrix is what allows the product form. The
+generic bound for a Hermitian matrix $X$ with eigenvalues $\mu_i$,
+$\|A^{1/2}XA^{1/2}\|_\F^2=\tr(AXAX)\le\tr(A^2X^2)\le\sum_ia_i^2\mu_i^{2}$
+(Cauchy--Schwarz, then von Neumann's trace inequality with both sequences
+sorted), applied to $X=iM$ gives only $\sum_ks_k^2(a_{2k-1}^2+a_{2k}^2)$,
+which is weaker than \eqref{eq:prescribed} by the arithmetic--geometric mean
+inequality and is attained by diagonal $X$, a form unavailable to $iM$.
+As a matrix inequality, \eqref{eq:prescribed} is not new in substance: the
+second proof of Theorem~\ref{thm:prescribed} derives it in a few lines from
+Horn's 1950 product inequality~\cite{horn50}, and it is a special case of a
+theorem of Mathias found after this note was written and known to us through
+its zbMATH review (Zbl 0759.15011; the paper itself was not obtained), as
+follows. The skew-symmetric Schur--Horn
+theorem (Leite, Richa and Tomei~\cite{lrt}; \cite[Prop.~3.10]{sss}, which
+concerns the linear skew-diagonal projection of an orbitope) and the main
+theorem of Tam~\cite{tam} describe the entries on one fixed matching under
+congruence, the moduli of the skew-diagonal entries being weakly majorized by
+the Youla values (with one further inequality, of Thompson--Sing type, in
+Tam's even-dimensional full-matching case); they do not
+directly state the weighted squared-entry inequality. Mathias~\cite{mathias}
+proved, as the review states it, that for a real positive semidefinite $A$
+with ordered diagonal entries $\alpha_1\ge\dots\ge\alpha_n$ and a complex
+skew-symmetric $B$,
+$\sum_{i\le k}\sigma_i(A\circ B)\le\sum_{i\le k}\tilde\alpha_i\,\sigma_i(B)$
+for every $k$, where $\tilde\alpha_{2i-1}=\tilde\alpha_{2i}=\sqrt{\alpha_{2i-1}\alpha_{2i}}$
+(and $\tilde\alpha_n=0$ for odd $n$), together with the corresponding bound in
+every unitarily invariant norm. With $A=dd^T$, $d_i=\sqrt{a_i}$, the Hadamard
+product is exactly the matrix $DMD=(dd^T)\circ M$ of the second proof, whose
+singular values are $t_1,t_1,t_2,t_2,\dots$, so his inequality says that
+$(t_k)_k$ is weakly majorized by $(\sqrt{a_{2k-1}a_{2k}}\,s_k)_k$, and the
+convexity of the square gives $\sum_kt_k^2\le\sum_ks_k^2a_{2k-1}a_{2k}$,
+which is \eqref{eq:prescribed}; with $\|M\|_\op\le1$ it also gives the value
+\eqref{eq:free}. We claim no priority for \eqref{eq:prescribed}: it is the
+Frobenius case of Mathias's theorem. Tam and Leite--Richa--Tomei were
+available to us only through their abstracts (Sanyal--Sottile--Sturmfels in
+full), and we do not claim that their papers contain no equivalent
+formulation. This note's contribution is the application to Gil's questions, through
+the hull lemma of the companion manuscript, and the nested-set family of
+Proposition~\ref{prop:family}; the searches described here do not establish
+priority for these formulations either.
+\end{remark}
+
+\begin{remark}[product weights are essential]\label{rem:nonproduct}
+With prescribed Youla values and general nonnegative weights $b_{ij}$ the
+maximum of $\sum_{i<j}b_{ij}M_{ij}^2$ need not be attained in the aligned
+class, and the linear program over \eqref{eq:family} need not be tight. Take
+$n=4$ with distinct positive populations, say $a=(0.4,0.3,0.2,0.1)$, so that
+alignment means matching support (distinct populations leave no residual
+rotation in Gil's Definition 1), $s=(1,0.9)$, $b_{12}=2$, $b_{13}=b_{24}=1.2$,
+all other $b_{ij}=0$, and $c=\sqrt{0.84}$. The real skew matrix with
+$M_{12}=0.3$, $M_{13}=c$, $M_{24}=-c$, $M_{34}=0.2$ (and zeros elsewhere above
+the diagonal) has $s_1^2+s_2^2=\tfrac12\|M\|_\F^2=1.81$ and
+$s_1s_2=|\operatorname{Pf}M|=0.9$, so its singular values are $1,1,0.9,0.9$;
+its value is $2(0.09)+1.2(0.84)+1.2(0.84)=2.196$, while the best aligned value
+is $2.172$ (the matching $\{13,24\}$ with $s_1^2,s_2^2$ in either order;
+$\{12,34\}$ gives $2.0$ and $\{14,23\}$ gives $0$). The linear program over
+\eqref{eq:family} gives $2.324$: the point $x_{12}=0.19$, $x_{13}=x_{24}=0.81$,
+all other $x_e=0$, is feasible with objective $2.324$, and the combination of
+$0.6$ times the inequality for $C=\{1,2\}$, $B=[4]$ with $0.2$ times each of
+the inequalities for $C=\{1,2,3\}$ and $C=\{1,2,4\}$, $B=[4]$, bounds the
+objective by $0.6\cdot2+0.2\cdot2.81+0.2\cdot2.81=2.324$. The value $2.196$
+is the exact maximum over $\Orth(4)$: with
+$X=\tfrac12(M_{12}+M_{34},\,M_{13}-M_{24},\,M_{14}+M_{23})$ and
+$Y=\tfrac12(M_{12}-M_{34},\,M_{13}+M_{24},\,M_{14}-M_{23})$ (in the notation
+of Gil's Appendix~A, $X=\tfrac12A_+\hat v_+$ and $Y=\tfrac12A_-\hat v_-$ with
+$A_\pm=s_1\pm s_2$ on one orientation class \cite[eqs.~(A3)--(A6)]{gil}) the
+constraints
+$\tfrac14\|M\|_\F^2=\|X\|^2+\|Y\|^2=0.905$ and
+$|\operatorname{Pf}M|=\bigl|\|X\|^2-\|Y\|^2\bigr|=0.9$ (an orientation-reversing
+orthogonal congruence changes the sign of the Pfaffian and exchanges the
+roles of $X$ and $Y$, so only the absolute value is invariant on the orbit)
+give $\{\|X\|^2,\|Y\|^2\}=\{0.9025,0.0025\}$, the objective is
+$2(X_1+Y_1)^2+2.4(X_2^2+Y_2^2)$, symmetric in $X$ and $Y$, and when
+$\|Y\|^2=0.0025$ it is at most
+$2.172-0.4(X_1-5Y_1)^2+9.6Y_1^2\le2.172+9.6\cdot0.0025=2.196$, with equality
+at the displayed matrix. This note does not determine the maximum for general weights.
+\end{remark}
+
+\section{Consequences for the intrinsic description}
+
+\begin{corollary}\label{cor:consequences}
+Let the populations be fixed.
+\begin{enumerate}
+\item With free Youla values, every functional of the form
+$\sum_{i<j}b_{ij}M_{ij}^2$ with $b_{ij}\ge0$ is maximized by an aligned state
+whose support is a maximum-weight matching for the weights $b$ on the support
+$\{i:a_i>0\}$ (every entry on an inactive axis is zero, so for positive
+populations the matching is on all of $[n]$); in particular Gil's
+hierarchical descriptors that are linear in the squared metaspin entries are
+extremized in the aligned class.
+\item For positive populations, the set of achievable coherence weight vectors
+$(N_{ij}^2/(a_ia_j))_{i<j}$ over all states with these populations has convex
+hull equal to Edmonds' matching polytope $\cP_n$; in particular no state can
+put total squared metaspin weight more than $(|B|-1)/2$ on the pairs inside an
+odd set $B$, whatever its orientation.
+\item With Youla values also fixed ($s_1\le1$, read on the support of the
+populations), the squared cohesion is at most
+$2\sum_ks_k^2a_{2k-1}a_{2k}$, and the bound is attained only if
+$\|M_{[p],[q]}\|_\F^2=R(p,q)$ for every $p\le q$ with $a_p>a_{p+1}$ and
+$a_q>a_{q+1}$ (with $a_{n+1}=0$), that is, only if every prefix inequality
+used in the proof is tight on the level sets of the populations. Whether this
+forces alignment is not examined here.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(1) and (2) are Theorem~\ref{thm:free} and Lemma~\ref{lem:hull}; (3) is
+Theorem~\ref{thm:prescribed} together with the observation that equality in
+the integrated inequality forces equality in $\Psi\le h$ for almost every
+$(u,v)$, and the prefix pairs $(C,B)$ that occur for a set of $(u,v)$ of
+positive measure are exactly those named.
+\end{proof}
+
+The results here do not determine the image of Gil's Gram map $G(a,Q_M)$
+(his question (ii)), or the maximum of a general nonnegative-weight
+functional $\sum_{i<j}b_{ij}M_{ij}^2$ with prescribed Youla values;
+Remark~\ref{rem:nonproduct} shows that alignment and the linear program over
+\eqref{eq:family} do not solve the latter in general.
+
+\section{Numerical checks}\label{sec:checks}
+
+The program \texttt{verify\_gil.py} (seed $20260929$; results in
+\texttt{verification-gil.json}; both published with this note at
+\url{https://hypnosmath.org/research/global-maximal-coherence-two-questions-of-gil}) performs
+the following finite checks. They
+are implementation controls, not part of the proofs; the searches are local,
+and the program records the worst shortfall of each search as well as its
+largest excess, so that a search that fails to reach a bound is visible.
+\begin{itemize}
+\item Free Youla values, $2\le n\le7$, five population vectors per $n$ ($30$
+instances): $300$ random antisymmetric contractions each, and projected
+gradient ascent over the contraction ball ($20$ random starts, $4000$ steps,
+the singular values clipped at $1$ after each step, a final snap to a partial
+isometry); the squared cohesion never exceeded \eqref{eq:free} beyond roundoff
+(largest excess $5.6\cdot10^{-16}$), the ascent came within $10^{-6}$ of it in
+$19$ instances and within $10^{-4}$ in all $30$, and its worst shortfall was
+$7.2\cdot10^{-5}$ (at $n=7$).
+\item Prescribed Youla values, same dimensions, five spectra per $n$ including
+$s\equiv1$: $300$ random orientations and $20$ Nelder--Mead maximizations,
+both over $\mathrm{SO}(n)$ through the exponential parametrization (a
+coordinate sign flip preserves squared entries, so this covers $\Orth(n)$);
+the value $2\sum_ks_k^2a_{2k-1}a_{2k}$ was not exceeded beyond numerical error
+(largest excess $1.5\cdot10^{-13}$) and was reached within $10^{-6}$ in all
+$30$ instances.
+\item Linear programs over the full family \eqref{eq:family}, over the prefix
+subfamily alone, over $C=B$ alone, and over $C=B$ with the degree constraints,
+compared with Theorem~\ref{thm:prescribed}: the first two agree with the
+theorem to $5.6\cdot10^{-17}$ in every instance; the last two exceed it as
+reported in Remark~\ref{rem:lp}.
+\item Floating-point checks of the odd-set inequalities for random
+antisymmetric contractions on every odd subset, $3\le n\le8$ ($8760$
+checks, largest excess $-0.032$).
+\end{itemize}
+
+\section{Provenance}\label{sec:provenance}
+
+The two questions were found while reviewing the companion manuscript~\cite{ross}, whose hull
+lemma this note reuses, and the theorems were proved in that session; no step of the mathematics
+came from the harness. The companion manuscript arose from Hypnos~\cite{HypnosMethods}, a research harness built at the direction of David Ross. Its proposal models are Gemma~4 31B, a dense model in 4-bit activation-aware weight quantization (AWQ), \path{QuantTrio/gemma-4-31B-it-AWQ}; Gemma~4 26B, a mixture-of-experts model with 4 billion active parameters, served in AWQ from a quantization of \path{google/gemma-4-26B-A4B-it}; and Qwen3 32B, a dense model in 4-bit AWQ, \path{Qwen/Qwen3-32B-AWQ}. They run through vLLM on hardware operated by Ross and generate claims from a notebook of structured records. Claude Opus (Anthropic), accessed through a subscription, reviews samples under pre-registered rules; claims selected for execution include a computation that the harness runs. Proposals, verdicts and execution records are retained in the private repository and database. The site \url{https://hypnosmath.org} publishes reviewed explanations and selected computational records. The program of Section~\ref{sec:checks} and its
+recorded outputs are published with this note at
+\url{https://hypnosmath.org/research/global-maximal-coherence-two-questions-of-gil}, with the
+note's source and its reviews.
+
+\begin{thebibliography}{99}
+\bibitem{gil} J.~J.~Gil, Entropic and geometric population--coherence
+complementarity in finite-dimensional quantum states, \emph{Entropy} 28(8):877 (2026),
+\href{https://doi.org/10.3390/e28080877}{\nolinkurl{doi:10.3390/e28080877}}.
+\bibitem{edmonds} J.~Edmonds, Maximum matching and a polyhedron with $0,1$-vertices,
+\emph{J. Res. Nat. Bur. Standards B} 69B (1965) 125--130,
+\href{https://doi.org/10.6028/jres.069B.013}{\nolinkurl{doi:10.6028/jres.069B.013}}.
+\bibitem{youla} D.~C.~Youla, A normal form for a matrix under the unitary congruence group,
+\emph{Canad. J. Math.} 13 (1961) 694--704,
+\href{https://doi.org/10.4153/CJM-1961-059-8}{\nolinkurl{doi:10.4153/CJM-1961-059-8}}.
+\bibitem{fan} K.~Fan, On a theorem of Weyl concerning eigenvalues of linear transformations I,
+\emph{Proc. Nat. Acad. Sci. USA} 35(11) (1949) 652--655,
+\href{https://doi.org/10.1073/pnas.35.11.652}{\nolinkurl{doi:10.1073/pnas.35.11.652}}.
+\bibitem{horn50} A.~Horn, On the singular values of a product of completely
+continuous operators, \emph{Proc. Nat. Acad. Sci. USA} 36(7) (1950) 374--375,
+\href{https://doi.org/10.1073/pnas.36.7.374}{\nolinkurl{doi:10.1073/pnas.36.7.374}}.
+\bibitem{bhatia} R.~Bhatia, \emph{Matrix Analysis}, Springer, 1997, Chapter III.
+\bibitem{hornjohnson} R.~A.~Horn and C.~R.~Johnson, \emph{Topics in Matrix Analysis},
+Cambridge University Press, 1991,
+\href{https://doi.org/10.1017/CBO9780511840371}{\nolinkurl{doi:10.1017/CBO9780511840371}}.
+\bibitem{hjma} R.~A.~Horn and C.~R.~Johnson, \emph{Matrix Analysis}, 2nd ed.,
+Cambridge University Press, 2013.
+\bibitem{lrt} R.~S.~Leite, T.~R.~W.~Richa and C.~Tomei, Geometric proofs of some
+theorems of Schur--Horn type, \emph{Linear Algebra Appl.} 286 (1999) 149--173,
+\href{https://doi.org/10.1016/S0024-3795(98)10169-6}{\nolinkurl{doi:10.1016/S0024-3795(98)10169-6}}.
+\bibitem{mathias} R.~Mathias, The singular values of the Hadamard product of a
+positive semidefinite and a skew-symmetric matrix, \emph{Linear Multilinear
+Algebra} 31 (1992) 57--70, \href{https://doi.org/10.1080/03081089208818122}{\nolinkurl{doi:10.1080/03081089208818122}}.
+\bibitem{sss} R.~Sanyal, F.~Sottile and B.~Sturmfels, Orbitopes,
+\emph{Mathematika} 57(2) (2011) 275--314,
+\href{https://doi.org/10.1112/S002557931100132X}{\nolinkurl{doi:10.1112/S002557931100132X}}.
+\bibitem{tam} T.-Y.~Tam, Partial superdiagonal elements and singular values of a complex
+skew-symmetric matrix, \emph{SIAM J. Matrix Anal. Appl.} 19(3) (1998) 737--754,
+\href{https://doi.org/10.1137/S0895479896312559}{\nolinkurl{doi:10.1137/S0895479896312559}}.
+\bibitem{ross} GPT-6 Astra, at the direction of D.~Ross, Approximate antiunitary
+symmetry as a matching problem, manuscript (September 2026), Hypnos Math,
+\url{https://hypnosmath.org}.
+\bibitem{HypnosMethods} Claude Fable 5, at the direction of D.~Ross, Self-grading without self-deception: verdict discipline for a long-running mathematical research agent, manuscript (August 2026), Hypnos Math, \url{https://hypnosmath.org}.
+\end{thebibliography}
+\end{document}

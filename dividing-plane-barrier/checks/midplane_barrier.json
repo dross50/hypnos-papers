@@ -1,0 +1,227 @@
+{
+ "generated_utc": "2026-10-02T00:57:40Z",
+ "A": {
+  "A1_material_derivative_is_4_14": true,
+  "A2_viscous_operator_is_4_over_r3_DX_DX_minus_1": true,
+  "A3_stress_free_equation_is_4_13": true,
+  "A4_midplane_ODE_from_full_equation": true,
+  "A5_a_equation_from_4_9": true,
+  "A5_riccati_equals_linear_ODE_over_H": true,
+  "A5_source_at_a_equals_2_is_minus_h": true,
+  "A6_lemma_4_3_axial_identity_4_16": true,
+  "A7_pressure_integration_by_parts": true
+ },
+ "B1": {
+  "h=0.0|w=4": {
+   "min_DX_H": 3.743049187636413e-12,
+   "min_H": 1.999998500000001e-06,
+   "sup_a": 1.9999999999943854,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 2.0,
+   "margin_2_minus_sup_a": 5.614619880134342e-12
+  },
+  "h=0.0|w=0.5": {
+   "min_DX_H": 2.000000500000001e-06,
+   "min_H": 2.0000002500000006e-06,
+   "sup_a": -2.499999691707444e-07,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 0.0,
+   "margin_2_minus_sup_a": 2.000000249999969
+  },
+  "h=0.0|w=1+3exp(-X)": {
+   "min_DX_H": 1.999997000000001e-06,
+   "min_H": 1.999998500000001e-06,
+   "sup_a": 0.8062183583685885,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 2.0,
+   "margin_2_minus_sup_a": 1.1937816416314115
+  },
+  "h=0.0|w=1+X/2": {
+   "min_DX_H": 7.714999392078963e-21,
+   "min_H": 2.0000000000000008e-06,
+   "sup_a": 2.0,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 2.0,
+   "margin_2_minus_sup_a": 0.0
+  },
+  "h=0.0|w=4+2sin(X)": {
+   "min_DX_H": 2.0708986258795127e-12,
+   "min_H": 1.999998500000001e-06,
+   "sup_a": 1.9999999999960834,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 2.0,
+   "margin_2_minus_sup_a": 3.916644786272627e-12
+  },
+  "h=0.01|w=4": {
+   "min_DX_H": 1.9999970100000007e-06,
+   "min_H": 1.9999985050000007e-06,
+   "sup_a": 1.9930954317926777,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 1.9933333333333334,
+   "margin_2_minus_sup_a": 0.006904568207322326
+  },
+  "h=0.01|w=0.5": {
+   "min_DX_H": 2.0000005100000007e-06,
+   "min_H": 2.000000255000001e-06,
+   "sup_a": -2.549999673640002e-07,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 0.0,
+   "margin_2_minus_sup_a": 2.0000002549999674
+  },
+  "h=0.01|w=1+3exp(-X)": {
+   "min_DX_H": 1.9999970100000007e-06,
+   "min_H": 1.9999985050000007e-06,
+   "sup_a": 0.795004445902241,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 1.9933333266666633,
+   "margin_2_minus_sup_a": 1.204995554097759
+  },
+  "h=0.01|w=1+X/2": {
+   "min_DX_H": 2.0000000100000006e-06,
+   "min_H": 2.0000000050000007e-06,
+   "sup_a": 1.9979583174298992,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 1.998,
+   "margin_2_minus_sup_a": 0.0020416825701008445
+  },
+  "h=0.01|w=4+2sin(X)": {
+   "min_DX_H": 1.9999970100000007e-06,
+   "min_H": 1.9999985050000007e-06,
+   "sup_a": 1.9956626611623447,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 1.9959999850729215,
+   "margin_2_minus_sup_a": 0.004337338837655302
+  },
+  "h=0.1|w=4": {
+   "min_DX_H": 1.999997100000001e-06,
+   "min_H": 1.999998550000001e-06,
+   "sup_a": 1.9310311731884502,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 1.9333333333333333,
+   "margin_2_minus_sup_a": 0.06896882681154981
+  },
+  "h=0.1|w=0.5": {
+   "min_DX_H": 2.000000600000001e-06,
+   "min_H": 2.0000003000000006e-06,
+   "sup_a": -2.9999995510010535e-07,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 0.0,
+   "margin_2_minus_sup_a": 2.000000299999955
+  },
+  "h=0.1|w=1+3exp(-X)": {
+   "min_DX_H": 1.999997100000001e-06,
+   "min_H": 1.999998550000001e-06,
+   "sup_a": 0.7076030486610181,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 1.9333332666666334,
+   "margin_2_minus_sup_a": 1.292396951338982
+  },
+  "h=0.1|w=1+X/2": {
+   "min_DX_H": 2.0000001000000007e-06,
+   "min_H": 2.0000000500000007e-06,
+   "sup_a": 1.9795851525523265,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 1.98,
+   "margin_2_minus_sup_a": 0.020414847447673523
+  },
+  "h=0.1|w=4+2sin(X)": {
+   "min_DX_H": 1.999997100000001e-06,
+   "min_H": 1.999998550000001e-06,
+   "sup_a": 1.9566659204232415,
+   "a_below_2": true,
+   "a_below_astar": true,
+   "astar_at_end": 1.959999850729215,
+   "margin_2_minus_sup_a": 0.0433340795767585
+  }
+ },
+ "B1_note": "a_below_2 is read from the sign of D_X H (min_DX_H > 0 and min_H > 0), since a = 2 - 2 D_X H / H; sup_a is a sampled double and prints as 2.0 where the gap 2 - a is below double precision (h = 0 cases)",
+ "B2": {
+  "order": 12,
+  "series_cpu_s": 0.03125,
+  "eta_truncation_degree_K": 14,
+  "U_n_at_0_all_zero": true,
+  "parity_U_odd_phi_even": true,
+  "phi_n_at_0": [
+   "1",
+   "-299/400",
+   "-171899/480000",
+   "581711201/1152000000",
+   "800893912001/4608000000000",
+   "-5846553603409499/27648000000000000",
+   "-22746132400203036299/232243200000000000000",
+   "41589561486870482641867/867041280000000000000000",
+   "1627869481088614805265127201/37456183296000000000000000000",
+   "2109364251703765409071012036501/674211299328000000000000000000000",
+   "-22990137257032348659941243268197357/2118949797888000000000000000000000000",
+   "-862454272997921909605136252556968654933/130527307549900800000000000000000000000000",
+   "-280233205060808740627787053845268051262057/1745336569524387840000000000000000000000000000"
+  ],
+  "w_n_at_0": [
+   "4",
+   "351/40",
+   "5063/1200",
+   "17463/6400",
+   "5591060201/5760000000",
+   "11501866471/43200000000",
+   "11621292009114199/145152000000000000",
+   "39602288202034721/1161216000000000000",
+   "7112103618232405846289/1040449536000000000000000",
+   "-77403953563075669229563/35115171840000000000000000",
+   "-6781589928400379939772942160007/9270405365760000000000000000000000",
+   "50694816580907623135845418067671/81579567218688000000000000000000000",
+   "8909706035690970286187669727159736277/27970137332121600000000000000000000000000"
+  ],
+  "midplane_ODE_residual_coefficients_0_to_N": [
+   "0",
+   "0",
+   "0",
+   "0",
+   "0",
+   "0",
+   "0",
+   "0",
+   "0",
+   "0",
+   "0",
+   "0",
+   "0"
+  ],
+  "midplane_ODE_holds_to_order_N": true,
+  "radius_estimate_from_ratio_test": 0.2883597618942812,
+  "X_max_tested": 0.1441798809471406,
+  "sup_a_series_on_[0,Xmax]": 0.26601861065173016,
+  "a_series_below_2": true,
+  "max_abs_diff_series_vs_ODE": 3.897743239278384e-12,
+  "series_matches_ODE_1e-6": true,
+  "asymmetric_U0_at_0": "1/20",
+  "asymmetric_U1_at_0": "451/4000",
+  "asymmetric_breaks_hypothesis": true,
+  "S_partial_midplane_negative": true,
+  "S_partial_midplane_value": -0.008901958759995906
+ },
+ "C": {
+  "M_candidate_solves_exterior_condition": true,
+  "M_solution_even": true,
+  "M_solution_matches_(1-eta2)^D": true,
+  "S_candidate_solves_tail_condition": true,
+  "S_solution_matches_(1-eta2)^(-2h)": true,
+  "S_candidate_exponent_negative_for_h_positive": true,
+  "note": "first-order linear homogeneous ODEs: one-dimensional solution spaces"
+ },
+ "cpu_seconds": 1.015625,
+ "all_checks_pass": true
+}
