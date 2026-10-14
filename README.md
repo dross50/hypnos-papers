@@ -5,7 +5,7 @@ two notes) and one methods paper, with every file published with them: each pape
 source, every review by an AI model beside the written answers to its findings, and every checker, a
 program that recomputes a paper's numbers, beside the output it recorded. Each paper was written by
 an AI model at the direction of David Ross: Claude Fable 5 or Claude Fable 5.1, made by Anthropic, or
-GPT-6 Astra, made by OpenAI. As of October 3, 2026, none of the papers has been peer reviewed, and no
+GPT-6 Astra, made by OpenAI. As of October 14, 2026, none of the papers has been peer reviewed, and no
 human mathematician has read them.
 
 ## What Hypnos is
@@ -42,7 +42,8 @@ The four mathematics manuscripts did not come from the loop in the same way.
   sessions wrote a ledger of the construction's moves and eleven section explanations; the
   explanation of Appendix B asked the question and sketched the answer; a Claude Fable 5.1 session
   ranked it first on its map of open questions and wrote the note. No small model's line is among
-  its sources, and the material has not been filed into the notebook.
+  its sources; the ledger was filed into the notebook later, on October 7, 2026, as 183 literature
+  entries.
 
 The methods paper reports on the harness's own conduct, not on mathematics.
 
